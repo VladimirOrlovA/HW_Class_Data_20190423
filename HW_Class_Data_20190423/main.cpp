@@ -5,9 +5,13 @@ int main()
 	setlocale(LC_ALL, "RUS");
 
 	// 20,8,1989
-	date_ a(29, 4, 2019);
-	cout << a << a.WhatDay() << "\n\n";
+	// 2020 високосный год
+	date_ a(35, 13, -2101);
+	//a.setDay(29);
 
+
+	cout << a << a.WhatDay() << "\n\n";
+	
 	//cin >> a;
 	//a.setYear(5);
 

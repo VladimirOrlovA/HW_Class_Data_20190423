@@ -11,38 +11,67 @@ date_::date_(int day, int month, int year)
 
 void date_::setDay(int day)
 {
-	if (day > 0)
-		this->day = day;
-	else this->day = 1;
+	try {
+		if (day <= 0)
+			throw exception("\nƒень не может быть установлен отрицательным числом, либо равным \"0\"..");
+	}
+	catch (exception&e) {
+		cout << "! ќшибка: " << e.what() << "\n”становлено значение по умолчанию - день = 1\n\n";
+		this->day = 1;
+	}
 
 	if (this->year % 4 == 0)
 		this->DaysOfMonth[2] = 29;
 
-	if (this->day > DaysOfMonth[this->month])
+	try {
+		if (day > DaysOfMonth[this->month])
+			throw exception("\n¬веденое значение дн€ превышает кол-во дней в установленном мес€це.");
+	}
+	catch (exception&e) {
+		cout << "! ќшибка: " << e.what() << "\n”становлено значение дн€ по умолчанию -"
+			<< " в текущем мес€це " << DaysOfMonth[this->month] << " д. \n\n";
 		this->day = DaysOfMonth[this->month];
-
+	}
 }
 
 void date_::setMonth(int month)
 {
-	if (month > 0)
-		this->month = month;
-	else this->month = 1;
-
-	this->month = month;
-	if (this->month < 1)
+	try {
+		if (month <= 0)
+			throw exception("\nћес€ц не может быть установлен отрицательным числом, либо равным \"0\".");
+	}
+	catch (exception&e) {
+		cout << "! ќшибка: " << e.what() << "\n”становлено значение по умолчанию - мес€ц = 1\n\n";
 		this->month = 1;
-	else if (this->month > 12)
+	}
+	try {
+		if (month > 12)
+			throw exception("\n¬веденое значение мес€ца превышает кол-во мес€цев в году.");
+	}
+	catch (exception&e) {
+		cout << "! ќшибка: " << e.what() << "\n”становлено значение по умолчанию - мес€ц = 12\n\n";
 		this->month = 12;
+	}
+
 }
 
 void date_::setYear(int year)
 {
-	this->year = year;
-	if (this->year <= 1970)
-		this->year = 1970;
-	else if (this->year > 2100)
-		this->year = 2100;
+	try {
+		if (year < 1970) {
+			this->year = 1970;
+			throw exception("\n”становленно значение года превышающее минимально"
+				"\nвозможный к установке год = 1970.");
+		}
+		if (year > 2100)
+			this->year = 1970;
+		throw exception("\n”становленно значение года превышающее максимально"
+			"\nвозможный к установке год = 2100.");
+	}
+	catch (exception&e) {
+		cout << "! ќшибка: " << e.what() << "\n”становлено значение по умолчанию - год = "
+			<< this->year << "\n\n";
+	}
 }
 
 int date_::getDay() const
@@ -137,7 +166,7 @@ string date_::WhatDay() const
 
 string date_::DateInWords() const
 {
-	string str=WhatDay()+',';
+	string str = WhatDay() + ',';
 
 	string str1 = " первое";
 	string str2 = " второе";
